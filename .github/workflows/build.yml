@@ -43,11 +43,17 @@ jobs:
         run: |
           yarn build
 
-      - name: Generate artifact attestation
+      - name: Generate artifact attestation (js bundle)
         if: github.event_name == 'release'
         uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
         with:
           subject-path: 'dist/tinypki-client-side-cert-req-lib.js'
+
+      - name: Generate artifact attestation (source map)
+        if: github.event_name == 'release'
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3
+        with:
+          subject-path: 'dist/tinypki-client-side-cert-req-lib.js.map'
 
       - name: Upload release artifact
         if: github.event_name == 'release'
@@ -57,7 +63,9 @@ jobs:
             The file `tinypki-client-side-cert-req-lib.js` contains a single-file JavaScript bundle that could be included in any HTML5 web page without any extra dependencies. The build was created automatically, using GitHub Actions and has the [artifact attestation](https://github.com/icedevml/tinypki-client-side-cert-req/attestations?q=tinypki-client-side-cert-req-lib.js) available.
             
             For the ESM library, see [@icedevml/tinypki-client-side-cert-req](https://www.npmjs.com/package/@icedevml/tinypki-client-side-cert-req) on npmjs.com.
-          files: 'dist/tinypki-client-side-cert-req-lib.js'
+          files: |
+            dist/tinypki-client-side-cert-req-lib.js
+            dist/tinypki-client-side-cert-req-lib.js.map
 
       - name: Release NPM package
         if: github.event_name == 'release'
