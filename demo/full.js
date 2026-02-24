@@ -9,8 +9,8 @@ async function demoGenerateCSR(alg) {
 
     // keys are explicitly generated using native browser's API to ensure cryptographic soundness
     const keys = await crypto.subtle.generateKey(alg, true, ["sign", "verify"]);
-    const privKeyDERB64 = await TinyPKIClientSideCertReqLib.exportKeyDERB64(keys.privateKey);
-    const csrPEM = await TinyPKIClientSideCertReqLib.generateCSR({
+    const privKeyDERB64 = await TinyPKICSR.exportKeyDERB64(keys.privateKey);
+    const csrPEM = await TinyPKICSR.generateCSR({
         commonName: "example.com",
         subjectAltNames: ["email:test@example.com", "dns:example.com"],
         keys: keys,
@@ -59,13 +59,13 @@ async function btnGenerateCSR() {
 }
 
 async function btnSelfSignCertificate() {
-    const certChainPEM = await TinyPKIClientSideCertReqLib.generateSelfSignedCert({
+    const certChainPEM = await TinyPKICSR.generateSelfSignedCert({
         algorithm: lastAlg,
         keys: lastKeys,
     });
 
     // importing key back from a string
-    //   const privKey = await crypto.subtle.importKey("pkcs8", TinyPKIClientSideCertReqLib.base64ToBuffer(privKeyDERB64), alg, true, ["sign"]);
+    //   const privKey = await crypto.subtle.importKey("pkcs8", TinyPKICSR.base64ToBuffer(privKeyDERB64), alg, true, ["sign"]);
     // don't store an unencrypted private key in cookies/local storage, that might be a security risk for the user
     // the best idea is to perform the entire CSR generation and PKCS#12 bundling process in a single script, without a page reload
 
@@ -84,7 +84,7 @@ async function btnGeneratePKCS12() {
             "or use 'Generate self-signed certificate button' to make a demo self-signed certificate.");
     }
 
-    const pkcs12B64 = await TinyPKIClientSideCertReqLib.generatePKCS12({
+    const pkcs12B64 = await TinyPKICSR.generatePKCS12({
         algorithm: lastAlg,
         certChainPEM: certChainPEM,
         privKeyDERB64: privKeyDERB64,
@@ -94,8 +94,8 @@ async function btnGeneratePKCS12() {
 
     document.getElementById("pkcs12B64").value = pkcs12B64;
 
-    TinyPKIClientSideCertReqLib.savePKCS12BufferAsFile({
-        buffer: TinyPKIClientSideCertReqLib.base64ToBuffer(pkcs12B64),
+    TinyPKICSR.savePKCS12BufferAsFile({
+        buffer: TinyPKICSR.base64ToBuffer(pkcs12B64),
         targetName: "bundle.p12"
     });
 }
@@ -113,8 +113,8 @@ async function wrapHandleErrors(callback) {
 
 document.addEventListener("DOMContentLoaded", () => {
     wrapHandleErrors(async () => {
-        if (typeof TinyPKIClientSideCertReqLib === "undefined") {
-            throw Error("TinyPKIClientSideCertReqLib is not available. Make sure that you've built the library first, " +
+        if (typeof TinyPKICSR === "undefined") {
+            throw Error("TinyPKICSR is not available. Make sure that you've built the library first, " +
                 "and that it was correctly included on the web page.");
         }
     });

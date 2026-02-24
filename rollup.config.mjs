@@ -10,7 +10,7 @@ export default [
         output: {
             file: "dist/tinypki-csr.js",
             format: "iife",
-            name: "TinyPKIClientSideCertReqLib",
+            name: "TinyPKICSR",
             sourcemap: true,
         },
         plugins: [

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TinyPKI's ClientSideCertReq Library Demo (Simple)</title>
+    <title>TinyPKICSR Library Demo (Simple)</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <style>
@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container mt-4 mb-4">
-    <h1>TinyPKI's ClientSideCertReq Library Demo (Simple)</h1>
+    <h1>TinyPKICSR Library Demo (Simple)</h1>
     <div class="mt-4">
         <h2>Generate CSR</h2>
         <div class="mb-3">
@@ -74,7 +74,7 @@
             "-----END CERTIFICATE-----";
 
         /**
-         * NOTE! This demo uses a single-file JS bundle which exposes a global object TinyPKIClientSideCertReqLib.
+         * NOTE! This demo uses a single-file JS bundle which exposes a global object TinyPKICSR.
          * For the ESM library usage, this has to be replaced with appropriate imports. Example:
          *
          * import {
@@ -100,8 +100,8 @@
             };
 
             const keys = await crypto.subtle.generateKey(alg, true, ["sign", "verify"]);
-            const privKeyDERB64 = await TinyPKIClientSideCertReqLib.exportKeyDERB64(keys.privateKey);
-            const csrPEM = await TinyPKIClientSideCertReqLib.generateCSR({
+            const privKeyDERB64 = await TinyPKICSR.exportKeyDERB64(keys.privateKey);
+            const csrPEM = await TinyPKICSR.generateCSR({
                 commonName: "example.com",
                 subjectAltNames: ["email:test@example.com", "dns:example.com"],
                 keys: keys,
@@ -123,7 +123,7 @@
                 hash: "SHA-256",
             };
 
-            const pkcs12B64 = await TinyPKIClientSideCertReqLib.generatePKCS12({
+            const pkcs12B64 = await TinyPKICSR.generatePKCS12({
                 algorithm: alg,
                 certChainPEM: certChainPEM,
                 privKeyDERB64: privKeyDERB64,
@@ -131,8 +131,8 @@
                 pkcs12Algorithm: "3des",
             });
 
-            TinyPKIClientSideCertReqLib.savePKCS12BufferAsFile({
-                buffer: TinyPKIClientSideCertReqLib.base64ToBuffer(pkcs12B64),
+            TinyPKICSR.savePKCS12BufferAsFile({
+                buffer: TinyPKICSR.base64ToBuffer(pkcs12B64),
                 targetName: "bundle.p12"
             });
         }
