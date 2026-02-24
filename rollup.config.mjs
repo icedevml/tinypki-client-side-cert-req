@@ -8,7 +8,7 @@ export default [
     {
         input: "src/index.ts",
         output: {
-            file: "dist/tinypki-client-side-cert-req-lib.js",
+            file: "dist/tinypki-csr.js",
             format: "iife",
             name: "TinyPKIClientSideCertReqLib",
             sourcemap: true,

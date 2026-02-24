@@ -47,10 +47,10 @@ jobs:
 
       - name: Add library build to the demo dir
         run: |
-          cp dist/tinypki-client-side-cert-req-lib.js demo/tinypki-client-side-cert-req-lib.js
-          cp dist/tinypki-client-side-cert-req-lib.js.map demo/tinypki-client-side-cert-req-lib.js.map
+          cp dist/tinypki-csr.js demo/tinypki-csr.js
+          cp dist/tinypki-csr.js.map demo/tinypki-csr.js.map
           cd demo/
-          sed -i 's#../dist/tinypki-client-side-cert-req-lib.js#tinypki-client-side-cert-req-lib.js#' *.html
+          sed -i 's#../dist/tinypki-csr.js#tinypki-csr.js#' *.html
 
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5

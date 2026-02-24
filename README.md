@@ -1,4 +1,4 @@
-# TinyPKI ClientSideCertReq Library
+# TinyPKI CSR/PKCS12 Generator Library
 
 A part of TinyPKI project, with the intention to facilitate higher adoption of mTLS.
 
@@ -8,29 +8,29 @@ A part of TinyPKI project, with the intention to facilitate higher adoption of m
 
 ## Demo
 
-See the **[library demo](https://icedevml.github.io/tinypki-client-side-cert-req/)** for further reference.
+See the **[library demo](https://icedevml.github.io/tinypki-csr/)** for further reference.
 
 ## Installation
 
 This library is distributed in two formats.
 
 ### ESM library
-Suitable for SPA frameworks (like React.js), available on NPM Registry as [@icedevml/tinypki-client-side-cert-req](https://www.npmjs.com/package/@icedevml/tinypki-client-side-cert-req).
+Suitable for SPA frameworks (like React.js), available on NPM Registry as [@icedevml/tinypki-csr](https://www.npmjs.com/package/@icedevml/tinypki-csr).
 
 ```bash
-npm install --save @icedevml/tinypki-client-side-cert-req
-yarn add @icedevml/tinypki-client-side-cert-req
+npm install --save @icedevml/tinypki-csr
+yarn add @icedevml/tinypki-csr
 ```
 
 ### Single-file JavaScript bundle
 Suitable for usage on classic HTML5 web pages, without requiring any external dependencies.
 The entire bundle is approximately 500 kB.
 
-Download: **[tinypki-client-side-cert-req-lib.js](https://github.com/icedevml/tinypki-client-side-cert-req/releases)**
+Download: **[tinypki-csr.js](https://github.com/icedevml/tinypki-csr/releases)**
 
 ## Usage
 
-See [`demo/`](https://github.com/icedevml/tinypki-client-side-cert-req/tree/master/demo) directory for usage examples.
+See [`demo/`](https://github.com/icedevml/tinypki-csr/tree/master/demo) directory for usage examples.
 
 ## Manual building
 
