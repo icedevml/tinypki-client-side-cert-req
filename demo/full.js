@@ -43,13 +43,28 @@ async function btnGenerateCSR() {
                 hash: algHash,
             });
         } else if (algFamily === "RSASSA-PKCS1-v1_5" || algFamily === "RSA-PSS") {
-            await demoGenerateCSR({
+            const hashDigestSize = {
+                "SHA-256": 32,
+                "SHA-384": 48,
+                "SHA-512": 64,
+            }
+
+            if (!hashDigestSize.hasOwnProperty(algHash)) {
+                throw Error("Unsupported hash: " + algHash)
+            }
+
+            const spec = {
                 name: algFamily,
                 modulusLength: parseInt(algParam),
                 publicExponent: new Uint8Array([0x01, 0x00, 0x01]), // 65537
                 hash: algHash,
-                saltLength: 32,
-            });
+            };
+
+            if (algFamily === "RSA-PSS") {
+                spec.saltLength = hashDigestSize;
+            }
+
+            await demoGenerateCSR(spec);
         } else {
             throw Error("Unsupported algFamily: " + algFamily);
         }
