@@ -1,6 +1,6 @@
 {
   "name": "@icedevml/tinypki-csr",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "TinyPKI CSR/PKCS12 Generator Library",
   "main": "dist/index.js",
   "module": "dist/index.js",

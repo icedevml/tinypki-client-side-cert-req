@@ -46,6 +46,14 @@
         <h2>Generate CSR</h2>
         <h4>Input</h4>
         <div class="mb-3">
+            <label for="csrCommonName" class="form-label">Subject Common Name (CN)</label>
+            <input type="text" class="form-control" value="example.com" id="csrCommonName">
+        </div>
+        <div class="mb-3">
+            <label for="csrSANs" class="form-label">Subject Alternative Names (comma-separated)</label>
+            <input type="text" class="form-control" value="dns:example.com" id="csrSANs">
+        </div>
+        <div class="mb-3">
             <label for="csrAlgorithm" class="form-label">Key algorithm</label>
             <select class="form-select" id="csrAlgorithm">
                 <option disabled class="option-hdr">Most common</option>

@@ -7,12 +7,23 @@ async function demoGenerateCSR(alg) {
     document.getElementById("certChainPEM").value = '';
     document.getElementById("pkcs12B64").value = '';
 
+    const csrCN = document.getElementById("csrCommonName").value;
+    const csrSANs = document.getElementById("csrSANs").value;
+
+    const subjectNameArr = csrCN.trim()
+        ? [{"CN": [csrCN]}]
+        : [];
+
+    const sansArr = csrSANs
+        .split(',')
+        .filter((san) => san.trim());
+
     // keys are explicitly generated using native browser's API to ensure cryptographic soundness
     const keys = await crypto.subtle.generateKey(alg, true, ["sign", "verify"]);
     const privKeyDERB64 = await TinyPKICSR.exportKeyDERB64(keys.privateKey);
     const csrPEM = await TinyPKICSR.generateCSR({
-        commonName: "example.com",
-        subjectAltNames: ["email:test@example.com", "dns:example.com"],
+        subjectName: subjectNameArr,
+        subjectAltNames: sansArr,
         keys: keys,
         algorithm: alg,
     });
@@ -61,7 +72,7 @@ async function btnGenerateCSR() {
             };
 
             if (algFamily === "RSA-PSS") {
-                spec.saltLength = hashDigestSize;
+                spec.saltLength = hashDigestSize[algHash];
             }
 
             await demoGenerateCSR(spec);

@@ -4,7 +4,7 @@ import {JsonGeneralName} from "@peculiar/x509";
 export interface IGenerateCSRParams {
     keys: CryptoKeyPair
     algorithm: RsaHashedKeyGenParams | RsaPssParams | EcKeyGenParams | EcdsaParams
-    commonName: string
+    subjectName: Record<string, string[]>[]
     subjectAltNames: string[]
 }
 
@@ -13,7 +13,7 @@ type PEMString = string;
 export async function generateCSR({
                                       keys,
                                       algorithm,
-                                      commonName,
+                                      subjectName,
                                       subjectAltNames
                                   }: IGenerateCSRParams): Promise<PEMString> {
     const ALLOWED_PREFIXES = [
@@ -48,7 +48,7 @@ export async function generateCSR({
     }
 
     const csr = await x509.Pkcs10CertificateRequestGenerator.create({
-        name: [{"CN": [commonName]}],
+        name: subjectName,
         keys,
         signingAlgorithm: algorithm,
         extensions: [

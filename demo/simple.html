@@ -102,7 +102,7 @@
             const keys = await crypto.subtle.generateKey(alg, true, ["sign", "verify"]);
             const privKeyDERB64 = await TinyPKICSR.exportKeyDERB64(keys.privateKey);
             const csrPEM = await TinyPKICSR.generateCSR({
-                commonName: "example.com",
+                subjectName: [{"CN": "example.com"}],
                 subjectAltNames: ["email:test@example.com", "dns:example.com"],
                 keys: keys,
                 algorithm: alg,
